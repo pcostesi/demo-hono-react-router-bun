@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
-    "dev": "bunx --bun vite -c dev.vite.config.ts",
+    "build": "bun run --bun react-router build",
+    "dev": "bun run --bun react-router dev -c dev.vite.config.ts",
     "start": "bun ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "db:push": "bunx --bun drizzle-kit push"

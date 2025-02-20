@@ -14,9 +14,9 @@ export default defineConfig({
     reactRouter(),
     tsconfigPaths()
   ],
-  resolve: {
-    alias: {
-      'react-dom/server': 'react-dom/server.bun',
-    },
-  },
+  // resolve: {
+  //   alias: {
+  //     'react-dom/server': 'react-dom/server.bun',
+  //   },
+  // },
 });

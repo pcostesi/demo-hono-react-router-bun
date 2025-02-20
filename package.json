@@ -4,24 +4,33 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "dev": "bunx --bun vite -c dev.vite.config.ts",
+    "start": "bun ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "db:push": "bunx --bun drizzle-kit push"
   },
   "dependencies": {
+    "@libsql/client": "^0.14.0",
     "@react-router/node": "^7.2.0",
-    "@react-router/serve": "^7.2.0",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.39.3",
+    "hono": "^4.7.2",
     "isbot": "^5.1.17",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.2.0"
+    "react-router": "^7.2.0",
+    "react-router-hono-server": "*",
+    "remix-hono": "^0.0.18",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@react-router/dev": "^7.2.0",
     "@tailwindcss/vite": "^4.0.0",
+    "@types/bun": "^1.2.2",
     "@types/node": "^20",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
+    "drizzle-kit": "^0.30.4",
     "react-router-devtools": "^1.1.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.2",

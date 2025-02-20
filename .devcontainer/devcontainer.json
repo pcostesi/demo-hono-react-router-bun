@@ -1,0 +1,17 @@
+{
+  "name": "Bun Devcontainer",
+  "dockerFile": "../Dockerfile",
+  "context": "..",
+  "forwardPorts": [5173],
+  "mounts": ["source=${localWorkspaceFolder},target=/app,type=bind"],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "sh"
+      }
+    }
+  },
+  "postCreateCommand": "bun install",
+  "remoteUser": "bun",
+  "postStartCommand": "bun run dev  --host"
+}

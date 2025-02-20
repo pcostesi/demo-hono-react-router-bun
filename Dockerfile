@@ -8,32 +8,27 @@ WORKDIR /app
 RUN apk update && apk add --no-cache libc6-compat tini
 ENV APP=${APP}
 
-# ============= Install Development Dependencies =============
-
-FROM bun-alpine AS development-dependencies
-COPY package.json bun.lock ./
-RUN bun install --frozen-lockfile
-
-# ============= Install Production Dependencies =============
-
-FROM bun-alpine AS production-dependencies
-COPY package.json bun.lock ./
-RUN bun install --frozen-lockfile --production
-
 # ============= Devcontainer (for local development) =============
 
 FROM bun-alpine AS devcontainer
 WORKDIR /app
-COPY . .
-COPY --from=development-dependencies /app/node_modules /app/node_modules
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile  # Ensures missing deps are installed
 EXPOSE 5173/tcp
 CMD ["bun", "run", "dev"]
+
+# ============= Install Production Dependencies =============
+
+FROM devcontainer AS production-dependencies
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile --production
+CMD ["sh", "-c", "bun install --frozen-lockfile && bun run dev"]
 
 # ============= Build the Application =============
 
 FROM bun-alpine AS build
 COPY . .
-COPY --from=development-dependencies /app/node_modules /app/node_modules
+COPY --from=devcontainer /app/node_modules /app/node_modules
 RUN bun run build
 
 # ============= Final Release Image =============
